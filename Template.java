@@ -55,7 +55,7 @@ public class Template {
 		while(nums.size() > 0) {
 			int num = nums.get(0);
 			boolean filled = false;
-			int posZero = -1;
+			
 			for (int j = 0; j < grid[i].length; j++) {
 				if (grid[i][j] == 0 && val(num, i, j)) {
 					grid[i][j] = num;
@@ -63,24 +63,22 @@ public class Template {
 					nums.remove(0);
 					filled = true;
 					break;
-				} else if(grid[i][j] == 0 && !val (num,i,j)) {
-					posZero = j;
-				}
+				} 
 			}
 			
-			if(filled == false && posZero != -1) {
-				for (int j = 0; j < grid[i].length; j++) {
+			
+			// backtrack : put checknum back into numlist if num can be place into the spot 
+			if(filled == false) {
+				int j = (int)(Math.random()*grid[i].length);
 					int checknum = grid[i][j];
-					if (val(num, i, j) && val(checknum, i, posZero)) {
+					if (val(num, i, j)) {
 						unfillin(checknum, i, j);
 						grid[i][j] = num;
-						grid[i][posZero] = checknum;
+						nums.add(checknum);
 						fillin(num,i,j);
-						fillin(checknum,i,posZero);
 						nums.remove(0);
-						break;
 					}
-				}
+				
 			}
 			
 			
